@@ -2,9 +2,15 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const prisma = require('../prisma/client');
+const authenticateToken = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
+
+router.get('/me', authenticateToken, async (req, res) => {
+    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
+    res.json(user);
+});
 
 router.post('/register', async (req, res) => {
     const { username, email, password } = req.body;

@@ -7,7 +7,7 @@ const authRouter = require('./routes/auth.js');
 const app = express();
 
 const allowedOrigins = [
-    ''
+    'http://localhost:5173'
 ];
 
 app.use(cors({

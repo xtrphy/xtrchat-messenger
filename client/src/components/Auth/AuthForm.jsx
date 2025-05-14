@@ -4,21 +4,50 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import styles from './AuthForm.module.css';
 
-const AuthForm = ({ onSubmit, isAuthFormActive, setIsAuthFormActive }) => {
+const AuthForm = ({ isAuthFormActive, setIsAuthFormActive, setUser }) => {
     const [isRegister, setIsRegister] = useState(false)
-    const [formData, setFormData] = useState({ username: '', password: '', email: '' });
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const crossButton = <FontAwesomeIcon icon={faXmark} style={{ color: "#ffffff", }} />
 
-    const handleChange = (e) => {
-        setFormData((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit({ ...formData, mode: isRegister ? 'register' : 'login' });
+
+        const endpoint = isRegister ? 'api/auth/register' : 'api/auth/login';
+
+        const body = isRegister
+            ? { username, email, password }
+            : { username, password };
+
+        try {
+            const res = await fetch(`http://localhost:3000/${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+
+            const data = await res.json();
+            setIsAuthFormActive(false);
+            setUser(data);
+
+            if (!res.ok) {
+                alert(data.message || 'Error');
+                return;
+            }
+
+            if (!isRegister) {
+                localStorage.setItem('token', data.token);
+                setIsAuthFormActive(false);
+            } else {
+                alert('Registration succesfull');
+                setIsRegister(false);
+            }
+        } catch (err) {
+            console.error('Request error', err);
+        }
     };
 
     return (
@@ -31,8 +60,8 @@ const AuthForm = ({ onSubmit, isAuthFormActive, setIsAuthFormActive }) => {
                     type="text"
                     name="username"
                     placeholder="Username"
-                    value={formData.username}
-                    onChange={handleChange}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                 />
 
@@ -41,8 +70,8 @@ const AuthForm = ({ onSubmit, isAuthFormActive, setIsAuthFormActive }) => {
                         type="email"
                         name="email"
                         placeholder='Email'
-                        value={formData.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 ) : null}
@@ -51,8 +80,8 @@ const AuthForm = ({ onSubmit, isAuthFormActive, setIsAuthFormActive }) => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                 />
 

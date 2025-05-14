@@ -4,8 +4,7 @@ import { faCircleXmark, faUser } from '@fortawesome/free-regular-svg-icons'
 import { useState, useEffect, useRef } from 'react';
 import styles from './MenuDropdown.module.css';
 
-const MenuDropdown = ({ setIsAuthFormActive }) => {
-    const [user, setUser] = useState({});
+const MenuDropdown = ({ setIsAuthFormActive, user, setUser }) => {
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
     const ProfileIcon = <FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} />
@@ -24,18 +23,14 @@ const MenuDropdown = ({ setIsAuthFormActive }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) return;
+    // const handleOpenProfile = () => {
+    // TODO handle opening profile
+    // };
 
-        fetch('http://localhost:3000/api/auth/me', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(res => {
-            setUser(res.data);
-        }).catch(() => localStorage.removeItem('token'));
-    }, []);
+    const handleExit = () => {
+        localStorage.removeItem('token');
+        setUser(null);
+    };
 
     return user ? (
         <div className={styles.menuContainer} ref={menuRef}>
@@ -43,8 +38,15 @@ const MenuDropdown = ({ setIsAuthFormActive }) => {
 
             <div className={`${styles.menuPanel} ${open ? styles.show : ''}`}>
                 <ul>
-                    <MenuItem icon={ProfileIcon} label='Profile' />
-                    <MenuItem icon={ExitIcon} label='Exit' />
+                    {/* <button className={styles.menuButton} onClick={handleOpenProfile}>
+                        <span className={styles.icon}>{ProfileIcon}</span>
+                        <span className={styles.buttonText}>Profile</span>
+                    </button> */}
+
+                    <button className={styles.menuButton} onClick={handleExit}>
+                        <span className={styles.icon}>{ExitIcon}</span>
+                        <span className={styles.buttonText}>Exit</span>
+                    </button>
                 </ul>
             </div>
         </div>
@@ -52,12 +54,5 @@ const MenuDropdown = ({ setIsAuthFormActive }) => {
         <button className={styles.logInBtn} onClick={() => setIsAuthFormActive(true)}>Log In</button>
     );
 };
-
-const MenuItem = ({ icon, label }) => (
-    <li className={styles.menuItem}>
-        <span className={styles.icon}>{icon}</span>
-        <span>{label}</span>
-    </li>
-);
 
 export default MenuDropdown;

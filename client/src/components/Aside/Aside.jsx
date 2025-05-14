@@ -7,15 +7,19 @@ import AuthForm from '../Auth/AuthForm';
 
 const Aside = () => {
     const [isAuthFormActive, setIsAuthFormActive] = useState(false);
+    const [user, setUser] = useState(() => {
+        const token = localStorage.getItem('token');
+        return token ? { token } : null;
+    });
 
     return (
         <aside>
             <div className={styles.container}>
                 <div className={styles.top}>
                     <Link className={styles.logo} to='/'>XTRchat</Link>
-                    <MenuDropdown setIsAuthFormActive={setIsAuthFormActive} />
+                    <MenuDropdown user={user} setUser={setUser} setIsAuthFormActive={setIsAuthFormActive} />
                 </div>
-                <AuthForm isAuthFormActive={isAuthFormActive} setIsAuthFormActive={setIsAuthFormActive} />
+                <AuthForm setUser={setUser} isAuthFormActive={isAuthFormActive} setIsAuthFormActive={setIsAuthFormActive} />
             </div>
         </aside>
     );

@@ -57,21 +57,35 @@
 }
 
 .menuPanel ul {
+    display: flex;
+    flex-direction: column;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.menuPanel li {
+.menuPanel button {
     padding: 10px 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.menuPanel li:hover {
+.menuPanel button:hover {
     background-color: #3a3a3a;
+}
+
+.menuButton {
+    display: flex;
+    justify-content: flex-start;
+    border: none;
+    background: transparent;
 }
 
 .icon {
     margin-right: 10px;
+    color: white;
+}
+
+.buttonText {
+    color: white;
 }
