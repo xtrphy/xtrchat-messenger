@@ -1,0 +1,15 @@
+.top {
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
