@@ -3,6 +3,19 @@
     display: inline-block;
 }
 
+.logInBtn {
+    font-weight: 300;
+    border: none;
+    color: white;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.logInBtn:hover {
+    color: rgb(180, 180, 180);
+}
+
 .toggleMenuBtn {
     font-size: 1.25rem;
     font-weight: 500;

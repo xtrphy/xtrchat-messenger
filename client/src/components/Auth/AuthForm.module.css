@@ -1,0 +1,87 @@
+.closeFormBtn {
+    position: absolute;
+    top: -13px;
+    right: -10px;
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.authContainer {
+    position: relative;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #111b21;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.authContainer.show {
+    opacity: 1;
+}
+
+.authForm {
+    background-color: #202c33;
+    padding: 30px 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.authForm h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.authForm input {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2a3942;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.authForm input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #00a884;
+}
+
+.authForm button {
+    padding: 10px;
+    background-color: #00a884;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.authForm button:hover {
+    background-color: #019173;
+}
+
+.switchMode {
+    font-size: 0.9rem;
+    text-align: center;
+    color: #aaa;
+}
+
+.switchMode span {
+    color: #00a884;
+    cursor: pointer;
+    text-decoration: underline;
+}

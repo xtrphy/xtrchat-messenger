@@ -1,10 +1,19 @@
-.top {
+.container {
+    height: 100vh;
     max-width: 600px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 2rem;
-    padding: 1rem;
+    padding: 1.25rem 2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
@@ -12,4 +21,9 @@
     color: white;
     font-weight: 600;
     font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: rgb(180, 180, 180);
 }

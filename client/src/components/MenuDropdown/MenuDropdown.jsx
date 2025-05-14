@@ -4,7 +4,8 @@ import { faCircleXmark, faUser } from '@fortawesome/free-regular-svg-icons'
 import { useState, useEffect, useRef } from 'react';
 import styles from './MenuDropdown.module.css';
 
-const MenuDropdown = () => {
+const MenuDropdown = ({ setIsAuthFormActive }) => {
+    const [user, setUser] = useState({});
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
     const ProfileIcon = <FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} />
@@ -23,7 +24,20 @@ const MenuDropdown = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    return (
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        fetch('http://localhost:3000/api/auth/me', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            setUser(res.data);
+        }).catch(() => localStorage.removeItem('token'));
+    }, []);
+
+    return user ? (
         <div className={styles.menuContainer} ref={menuRef}>
             <button className={styles.toggleMenuBtn} onClick={toggleMenu}>&#8942;</button>
 
@@ -34,6 +48,8 @@ const MenuDropdown = () => {
                 </ul>
             </div>
         </div>
+    ) : (
+        <button className={styles.logInBtn} onClick={() => setIsAuthFormActive(true)}>Log In</button>
     );
 };
 
