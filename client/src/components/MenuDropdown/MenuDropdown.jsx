@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark, faUser } from '@fortawesome/free-regular-svg-icons'
 import { useState, useEffect, useRef } from 'react';
 import styles from './MenuDropdown.module.css';
+import { Link } from 'react-router-dom';
 
 const MenuDropdown = ({ setIsAuthFormActive, user, setUser }) => {
     const [open, setOpen] = useState(false);
@@ -23,10 +24,6 @@ const MenuDropdown = ({ setIsAuthFormActive, user, setUser }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // const handleOpenProfile = () => {
-    // TODO handle opening profile
-    // };
-
     const handleExit = () => {
         localStorage.removeItem('token');
         setUser(null);
@@ -38,10 +35,10 @@ const MenuDropdown = ({ setIsAuthFormActive, user, setUser }) => {
 
             <div className={`${styles.menuPanel} ${open ? styles.show : ''}`}>
                 <ul>
-                    {/* <button className={styles.menuButton} onClick={handleOpenProfile}>
+                    <Link to='/profile' className={styles.linkToProfile} >
                         <span className={styles.icon}>{ProfileIcon}</span>
                         <span className={styles.buttonText}>Profile</span>
-                    </button> */}
+                    </Link>
 
                     <button className={styles.menuButton} onClick={handleExit}>
                         <span className={styles.icon}>{ExitIcon}</span>

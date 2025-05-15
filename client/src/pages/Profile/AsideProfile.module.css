@@ -1,0 +1,88 @@
+.container {
+    height: 100vh;
+    min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 1.25rem 2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: rgb(180, 180, 180);
+}
+
+.profileInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: #fff;
+}
+
+.profileInfo form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+.username {
+    font-weight: 400;
+}
+
+.bio {
+    margin-top: 0.5rem;
+    color: rgb(180, 180, 180);
+    text-align: center;
+    width: 55%;
+}
+
+.startEditingBtn {
+    height: 35px;
+    width: 35px;
+    padding: 0.35rem;
+    height: min-content;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.startEditingBtn:hover {
+    background-color: #3a3a3a;
+}
+
+.bioTextarea {
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(180, 180, 180);
+}

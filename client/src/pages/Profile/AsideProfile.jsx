@@ -1,0 +1,75 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import styles from './AsideProfile.module.css';
+import { useState, useEffect } from 'react';
+
+const AsideProfile = ({ user }) => {
+    const [bio, setBio] = useState('');
+    const [inputValue, setInputValue] = useState('');
+    const [isEditingBio, setIsEditingBio] = useState(false);
+
+    useEffect(() => {
+        if (user?.bio) {
+            setBio(user.bio);
+            setInputValue(user.bio);
+        }
+    }, [user?.bio]);
+
+    const editIcon = <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#ffffff", }} />;
+
+    const handleSave = async () => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            return;
+        }
+
+        const res = await fetch('http://localhost:3000/api/me', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ bio: inputValue }),
+        });
+
+        if (res.ok) {
+            setBio(inputValue);
+            setIsEditingBio(false);
+        } else {
+            alert('Error while saving');
+        }
+    };
+
+    return (
+        <aside>
+            <div className={styles.container}>
+                <div className={styles.top}>
+                    <Link className={styles.logo} to='/'>XTRchat</Link>
+                </div>
+                <div className={styles.profileInfo}>
+                    <img className={styles.avatar} src={user.avatarUrl} alt="Your avatar" />
+                    <h2 className={styles.username}>{user.username}</h2>
+
+                    {isEditingBio ? (
+                        <div>
+                            <textarea className={styles.bioTextarea} value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                            <button onClick={handleSave} className={styles.submitBtn}>
+                                Сохранить
+                            </button>
+                        </div>
+                    ) : (
+                        <p className={styles.bio}>
+                            {bio}
+                            <button className={styles.startEditingBtn} onClick={() => setIsEditingBio(true)}>{editIcon}</button>
+                        </p>
+                    )}
+                </div>
+            </div>
+        </aside>
+    );
+};
+
+export default AsideProfile;

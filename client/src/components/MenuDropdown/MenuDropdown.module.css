@@ -81,6 +81,21 @@
     background: transparent;
 }
 
+.linkToProfile {
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    border: none;
+    background: transparent;
+    padding: 10px 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.linkToProfile:hover {
+    background-color: #3a3a3a;
+}
+
 .icon {
     margin-right: 10px;
     color: white;
