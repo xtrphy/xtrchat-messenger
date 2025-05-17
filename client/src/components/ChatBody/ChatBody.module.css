@@ -23,15 +23,33 @@
 
 .messagesContainer {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 2rem;
 }
 
-.message {
-    display: flex;
-    align-items: flex-end;
-    width: fit-content;
-    padding: 0.35rem;
+.userMessage {
+    align-self: flex-end;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    background-color: #144c37;
+    color: white;
+    font-weight: 300;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.userMessageContent {
+    margin: 0.25rem;
+}
+
+.userMessageDate {
+    color: #ccc;
+    margin-left: 0.75rem;
+    font-size: 0.70rem;
+}
+
+.companionMessage {
+    align-self: flex-start;
+    padding: 0.5rem 0.75rem;
     border-radius: 5px;
     background-color: #242625;
     color: white;
@@ -39,12 +57,12 @@
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.messageContent {
+.companionMessageContent {
     margin: 0.25rem;
 }
 
-.messageDate {
+.companionMessageDate {
     color: #ccc;
-    margin-left: 0.75rem;
-    font-size: 0.70rem;
+        margin-left: 0.75rem;
+        font-size: 0.70rem;
 }
