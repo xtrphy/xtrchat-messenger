@@ -21,4 +21,17 @@ model User {
     avatarUrl    String?
     bio          String?
     createdAt    DateTime @default(now())
+
+    sentMessage      Message[] @relation("SentMessages")
+    receivedMessages Message[] @relation("ReceivedMessages")
+}
+
+model Message {
+    id         String   @id @default(cuid())
+    sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+    senderId   String
+    receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+    receiverId String
+    content    String
+    createdAt  DateTime @default(now())
 }

@@ -4,6 +4,8 @@ const cors = require('cors');
 
 const authRouter = require('./routes/auth.js');
 const meRouter = require('./routes/meRouter.js');
+const chatsRouter = require('./routes/chats.js');
+const messagesRouter = require('./routes/messages.js');
 
 const app = express();
 
@@ -29,6 +31,12 @@ app.use('/api/auth', authRouter);
 
 // Profile
 app.use('/api/me', meRouter);
+
+// Chats
+app.use('/api/chats', chatsRouter);
+
+// Messages
+app.use('/api/messages', messagesRouter);
 
 const PORT = process.env.PORT
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

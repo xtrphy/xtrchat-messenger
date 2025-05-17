@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import AsideProfile from './AsideProfile';
+import AsideProfile from '../AsideProfile/AsideProfile';
 import styles from './Profile.module.css'
 import { useEffect } from 'react';
 
