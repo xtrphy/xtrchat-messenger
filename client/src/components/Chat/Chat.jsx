@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Chat.module.css';
 
-const Chat = ({ chat }) => {
+const Chat = ({ chat, onSelectUser }) => {
     const currentUserId = localStorage.getItem('userId');
     const isSender = chat.sender.id === currentUserId;
     const otherUser = isSender ? chat.receiver : chat.sender;
@@ -12,7 +12,7 @@ const Chat = ({ chat }) => {
     };
 
     return (
-        <div className={styles.chat}>
+        <div className={styles.chat} onClick={() => onSelectUser(otherUser.id)}>
             <img className={styles.senderAvatar} src={otherUser.avatarUrl ? otherUser.avatarUrl : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'} alt={chat.sender.username} />
             <div className={styles.chatInfo}>
                 <div className={styles.senderAndTime}>
