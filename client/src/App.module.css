@@ -4,3 +4,7 @@ body {
     background-color: #161817;
     font-family: 'Inter', sans-serif;
 }
+
+.container {
+    display: flex;
+}

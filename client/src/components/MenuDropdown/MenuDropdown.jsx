@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './MenuDropdown.module.css';
 import { Link } from 'react-router-dom';
 
-const MenuDropdown = ({ setIsAuthFormActive, user, setUser }) => {
+const MenuDropdown = ({ setIsAuthFormActive, user, setUser, setChats }) => {
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
     const ProfileIcon = <FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} />
@@ -26,7 +26,9 @@ const MenuDropdown = ({ setIsAuthFormActive, user, setUser }) => {
 
     const handleExit = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         setUser(null);
+        setChats([]);
     };
 
     return user ? (

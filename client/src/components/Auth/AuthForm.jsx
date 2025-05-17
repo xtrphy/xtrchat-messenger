@@ -4,7 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import styles from './AuthForm.module.css';
 
-const AuthForm = ({ isAuthFormActive, setIsAuthFormActive, setUser }) => {
+const AuthForm = ({ isAuthFormActive, setIsAuthFormActive, setUser, setToken }) => {
     const [isRegister, setIsRegister] = useState(false)
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -40,6 +40,8 @@ const AuthForm = ({ isAuthFormActive, setIsAuthFormActive, setUser }) => {
 
             if (!isRegister) {
                 localStorage.setItem('token', data.token);
+                setToken(data.token)
+                localStorage.setItem('userId', data.userId);
                 setIsAuthFormActive(false);
             } else {
                 alert('Registration succesfull');

@@ -50,21 +50,27 @@ const AsideProfile = ({ user }) => {
                     <Link className={styles.logo} to='/'>XTRchat</Link>
                 </div>
                 <div className={styles.profileInfo}>
-                    <img className={styles.avatar} src={user.avatarUrl} alt="Your avatar" />
+                    <img className={styles.avatar} src={user.avatarUrl ? user.avatarUrl : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'} alt="Your avatar" />
                     <h2 className={styles.username}>{user.username}</h2>
 
                     {isEditingBio ? (
-                        <div>
+                        <div className={styles.editingBioContainer}>
                             <textarea className={styles.bioTextarea} value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
                             <button onClick={handleSave} className={styles.submitBtn}>
                                 Сохранить
                             </button>
                         </div>
-                    ) : (
+                    ) : bio ? (
                         <p className={styles.bio}>
                             {bio}
                             <button className={styles.startEditingBtn} onClick={() => setIsEditingBio(true)}>{editIcon}</button>
                         </p>
+                    ) : (
+                        <p>
+                            Write about yourself.
+                            <button className={styles.startEditingBtn} onClick={() => setIsEditingBio(true)}>{editIcon}</button>
+                        </p>
+
                     )}
                 </div>
             </div>

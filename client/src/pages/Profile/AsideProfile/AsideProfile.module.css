@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
-    padding: 1.25rem 2rem;
+    padding: 1.25rem;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -81,8 +81,28 @@
     background-color: #3a3a3a;
 }
 
+.editingBioContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .bioTextarea {
+    width: 300px;
     border: none;
     border-radius: 5px;
+    background-color: rgb(150, 150, 150);
+}
+
+.submitBtn {
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitBtn:hover {
     background-color: rgb(180, 180, 180);
 }
