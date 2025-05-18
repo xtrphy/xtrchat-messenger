@@ -2,8 +2,17 @@ import React from 'react';
 import styles from './ChatHeader.module.css';
 
 const ChatHeader = ({ messages }) => {
-    const userId = localStorage.getItem('userId');
+    if (!messages || messages.length === 0) {
+        return (
+            <header className={styles.header}>
+                <div className={styles.headerContainer}>
+                    <h3 className={styles.senderUsername}>No conversation selected</h3>
+                </div>
+            </header>
+        );
+    }
 
+    const userId = localStorage.getItem('userId');
     const firstMessage = messages[0];
 
     const isCurrentUserSender = firstMessage.sender.id === userId;

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../prisma/client');
 const authenticateToken = require('../middlewares/authMiddleware');
+const botService = require('../services/botService');
 
 router.get('/:userId', authenticateToken, async (req, res) => {
     const userId = req.user.id;
@@ -30,11 +31,25 @@ router.post('/', authenticateToken, async (req, res) => {
 
     if (!receiverId || !content) return res.status(400).json({ error: 'Missing data' });
 
-    const message = await prisma.message.create({
-        data: { senderId, receiverId, content }
-    });
+    try {
+        const message = await prisma.message.create({
+            data: { senderId, receiverId, content }
+        });
 
-    res.status(201).json(message);
+        const receiver = await prisma.user.findUnique({
+            where: { id: receiverId },
+            select: { username: true }
+        });
+
+        if (receiver && ['ChatBot', 'HelpDesk', 'NewsBot'].includes(receiver.username)) {
+            botService.sendBotResponse(senderId);
+        }
+
+        res.status(201).json(message);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to send message' });
+    }
 });
 
 module.exports = router;

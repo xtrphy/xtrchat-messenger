@@ -5,10 +5,41 @@ import { useState } from 'react';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
 import AuthForm from '../Auth/AuthForm';
 import Chat from '../Chat/Chat';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage } from '@fortawesome/free-solid-svg-icons';
 
 const Aside = ({ token, setToken, chats, setChats, selectedUserId, onSelectUser }) => {
     const [isAuthFormActive, setIsAuthFormActive] = useState(false);
     const [user, setUser] = useState(token);
+
+    const createTestChat = async () => {
+        if (!token) return;
+
+        try {
+            const res = await fetch('http://localhost:3000/api/chats/demo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to create test chat');
+            }
+
+            const data = await res.json();
+
+            const refreshEvent = new CustomEvent('refreshMessages');
+            window.dispatchEvent(refreshEvent);
+
+            if (data.botId) {
+                onSelectUser(data.botId);
+            }
+        } catch (err) {
+            console.error('Error creating test chat', err);
+        }
+    };
 
     return (
         <aside>
@@ -17,6 +48,14 @@ const Aside = ({ token, setToken, chats, setChats, selectedUserId, onSelectUser 
                     <Link className={styles.logo} to='/'>XTRchat</Link>
                     <MenuDropdown user={user} setUser={setUser} setChats={setChats} setIsAuthFormActive={setIsAuthFormActive} />
                 </div>
+
+                {token && (
+                    <button className={styles.testChatBtn} onClick={createTestChat}>
+                        <FontAwesomeIcon icon={faMessage} />
+                        <span>Start Test Chat</span>
+                    </button>
+                )}
+
                 {chats && chats.length > 0 ? (
                     <div className={styles.chats}>
                         {chats.map(chat => {

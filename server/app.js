@@ -6,6 +6,7 @@ const authRouter = require('./routes/auth.js');
 const meRouter = require('./routes/meRouter.js');
 const chatsRouter = require('./routes/chats.js');
 const messagesRouter = require('./routes/messages.js');
+const botService = require('./services/botService.js');
 
 const app = express();
 
@@ -25,6 +26,15 @@ app.use(cors({
     },
     credentials: true
 }));
+
+(async () => {
+    try {
+        await botService.ensureBotsExist();
+        console.log('Bot users initialized');
+    } catch (err) {
+        console.error('Error initializing bot users', err);
+    }
+})();
 
 // Authorization
 app.use('/api/auth', authRouter);

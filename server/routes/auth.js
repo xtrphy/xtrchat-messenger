@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const prisma = require('../prisma/client');
 const authenticateToken = require('../middlewares/authMiddleware');
+const botService = require('../services/botService');
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -30,6 +31,9 @@ router.post('/register', async (req, res) => {
             },
         });
 
+        await botService.ensureBotsExist();
+        await botService.initializeDemoChat(user.id);
+
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1d' });
         res.status(201).json({ token, userId: user.id, message: 'User registered successfully' });
     } catch (err) {
@@ -53,6 +57,9 @@ router.post('/login', async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
+
+        await botService.ensureBotsExist();
+        await botService.initializeDemoChat(user.id);
 
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1d' });
         res.json({ token, userId: user.id, message: 'Logged In' });
