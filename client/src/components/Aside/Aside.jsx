@@ -6,7 +6,7 @@ import MenuDropdown from '../MenuDropdown/MenuDropdown';
 import AuthForm from '../Auth/AuthForm';
 import Chat from '../Chat/Chat';
 
-const Aside = ({ token, setToken, chats, setChats, onSelectUser }) => {
+const Aside = ({ token, setToken, chats, setChats, selectedUserId, onSelectUser }) => {
     const [isAuthFormActive, setIsAuthFormActive] = useState(false);
     const [user, setUser] = useState(token);
 
@@ -21,7 +21,7 @@ const Aside = ({ token, setToken, chats, setChats, onSelectUser }) => {
                     <div className={styles.chats}>
                         {chats.map(chat => {
                             return (
-                                <Chat key={chat.id} chat={chat} onSelectUser={onSelectUser} />
+                                <Chat key={chat.id} chat={chat} selectedUserId={selectedUserId} onSelectUser={onSelectUser} />
                             )
                         })}
                     </div>

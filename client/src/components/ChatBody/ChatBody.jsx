@@ -14,32 +14,31 @@ const ChatBody = ({ messages, selectedUserId }) => {
         <main className={styles.chatBodyContainer}>
             <div className={styles.backgroundImage}></div>
             <div className={styles.messagesContainer}>
-                {messages.map(message => {
+                {messages.map((message, index) => {
                     if (message.senderId === userId) {
                         return (
-                            <div className={styles.userMessage}>
+                            <div className={styles.userMessage} key={message.id || `user-msg-${index}`}>
                                 <span className={styles.userMessageContent}>
                                     {message.content}
                                 </span>
-                                <span className={styles.userMessageDate}>{formatTime(message.createdAt)}
+                                <span className={styles.userMessageDate}>
+                                    {formatTime(message.createdAt)}
                                 </span>
                             </div>
-                        )
+                        );
                     }
 
-                    if (message.senderId !== userId) {
-                        return (
-                            <div className={styles.companionMessage}>
-                                <span className={styles.companionMessageContent}>
-                                    {message.content}
-                                </span>
-                                <span className={styles.companionMessageDate}>{formatTime(message.createdAt)}
-                                </span>
-                            </div>
-                        )
-                    }
-                }
-                )}
+                    return (
+                        <div className={styles.companionMessage} key={message.id || `companion-msg-${index}`}>
+                            <span className={styles.companionMessageContent}>
+                                {message.content}
+                            </span>
+                            <span className={styles.companionMessageDate}>
+                                {formatTime(message.createdAt)}
+                            </span>
+                        </div>
+                    );
+                })}
             </div>
             <ChatInput selectedUserId={selectedUserId} />
         </main>

@@ -18,7 +18,7 @@ const Chats = ({ messages, selectedUserId }) => {
 
     return (
         <div className={styles.chat}>
-            <ChatHeader messages={messages} />
+            <ChatHeader messages={messages} selectedUserId={selectedUserId} />
             <ChatBody messages={messages} selectedUserId={selectedUserId} />
         </div>
     );

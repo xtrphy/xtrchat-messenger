@@ -16,7 +16,8 @@ router.get('/:userId', authenticateToken, async (req, res) => {
         },
         orderBy: { createdAt: 'asc' },
         include: {
-            sender: { select: { id: true, username: true, avatarUrl: true } }
+            sender: { select: { id: true, username: true, avatarUrl: true } },
+            receiver: { select: { id: true, username: true, avatarUrl: true } },
         }
     });
 

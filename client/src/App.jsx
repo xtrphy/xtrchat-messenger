@@ -8,6 +8,7 @@ function App() {
     const [chats, setChats] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState(false);
     const [messages, setMessages] = useState([]);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
         const fetchChats = async () => {
@@ -18,12 +19,12 @@ function App() {
                 const data = await res.json();
                 setChats(data);
             } else {
-                return;
+                setChats([]);
             }
         }
 
         fetchChats();
-    }, [token]);
+    }, [token, refreshTrigger]);
 
     useEffect(() => {
         if (!selectedUserId) return;
@@ -39,11 +40,23 @@ function App() {
         };
 
         fetchChat();
-    }, [selectedUserId, token]);
+    }, [selectedUserId, token, refreshTrigger]);
+
+    useEffect(() => {
+        const handleRefresh = () => {
+            setRefreshTrigger(prev => prev + 1);
+        };
+
+        window.addEventListener('refreshMessages', handleRefresh);
+
+        return () => {
+            window.removeEventListener('refreshMessages', handleRefresh);
+        };
+    }, []);
 
     return (
         <div className={styles.container}>
-            <Aside token={token} setToken={setToken} chats={chats} setChats={setChats} onSelectUser={setSelectedUserId} />
+            <Aside token={token} setToken={setToken} chats={chats} setChats={setChats} selectedUserId={selectedUserId} onSelectUser={setSelectedUserId} />
             <Chats messages={messages} selectedUserId={selectedUserId} />
         </div>
     )

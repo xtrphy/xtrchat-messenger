@@ -8,6 +8,8 @@ const ChatInput = ({ selectedUserId }) => {
     const [message, setMessage] = useState('');
 
     const sendMessage = async (receiverId, content, token) => {
+        if (!content.trim()) return;
+
         try {
             const res = await fetch('http://localhost:3000/api/messages', {
                 method: 'POST',
@@ -23,9 +25,13 @@ const ChatInput = ({ selectedUserId }) => {
                 throw new Error(error.message || 'Failed to send message')
             }
 
-            const message = await res.json();
+            const messageData = await res.json();
             setMessage('');
-            return message;
+
+            const refreshEvent = new CustomEvent('refreshMessages');
+            window.dispatchEvent(refreshEvent);
+
+            return messageData;
         } catch (err) {
             console.error(err)
         }
