@@ -13,7 +13,7 @@ function App() {
     useEffect(() => {
         const fetchChats = async () => {
             if (token) {
-                const res = await fetch(`http://localhost:3000/api/chats`, {
+                const res = await fetch(`https://xtrchat-messenger.onrender.com/api/chats`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const data = await res.json();
@@ -30,7 +30,7 @@ function App() {
         if (!selectedUserId) return;
 
         const fetchChat = async () => {
-            const res = await fetch(`http://localhost:3000/api/messages/${selectedUserId}`, {
+            const res = await fetch(`https://xtrchat-messenger.onrender.com/api/messages/${selectedUserId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

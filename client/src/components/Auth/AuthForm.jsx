@@ -21,7 +21,7 @@ const AuthForm = ({ isAuthFormActive, setIsAuthFormActive, setUser, setToken }) 
             : { username, password };
 
         try {
-            const res = await fetch(`http://localhost:3000/${endpoint}`, {
+            const res = await fetch(`https://xtrchat-messenger.onrender.com/${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

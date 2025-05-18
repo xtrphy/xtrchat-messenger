@@ -16,7 +16,7 @@ const Profile = () => {
 
         if (!token) return;
 
-        fetch('http://localhost:3000/api/me', {
+        fetch('https://xtrchat-messenger.onrender.com/api/me', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

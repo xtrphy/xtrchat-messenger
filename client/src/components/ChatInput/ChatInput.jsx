@@ -11,7 +11,7 @@ const ChatInput = ({ selectedUserId }) => {
         if (!content.trim()) return;
 
         try {
-            const res = await fetch('http://localhost:3000/api/messages', {
+            const res = await fetch('https://xtrchat-messenger.onrender.com/api/messages', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

@@ -33,7 +33,7 @@ const AsideProfile = ({ user, onUpdateUser }) => {
             return;
         }
 
-        const res = await fetch('http://localhost:3000/api/me', {
+        const res = await fetch('https://xtrchat-messenger.onrender.com/api/me', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

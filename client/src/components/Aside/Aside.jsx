@@ -16,7 +16,7 @@ const Aside = ({ token, setToken, chats, setChats, selectedUserId, onSelectUser 
         if (!token) return;
 
         try {
-            const res = await fetch('http://localhost:3000/api/chats/demo', {
+            const res = await fetch('https://xtrchat-messenger.onrender.com/api/chats/demo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

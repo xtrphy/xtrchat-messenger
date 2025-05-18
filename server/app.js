@@ -11,7 +11,8 @@ const botService = require('./services/botService.js');
 const app = express();
 
 const allowedOrigins = [
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'https://xtrchat-messenger.onrender.com'
 ];
 
 app.use(express.json());
