@@ -14,8 +14,6 @@ const allowedOrigins = [
     'https://xtrmessenger.netlify.app'
 ];
 
-app.use(express.json());
-
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -26,6 +24,8 @@ app.use(cors({
     },
     credentials: true
 }));
+
+app.use(express.json());
 
 (async () => {
     try {
