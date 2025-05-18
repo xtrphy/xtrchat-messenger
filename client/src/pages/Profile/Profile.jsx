@@ -40,7 +40,7 @@ const Profile = () => {
     return (
         <main className={styles.profileMain}>
             <ProtectedRoute>
-                <AsideProfile user={user} />
+                <AsideProfile user={user} onUpdateUser={setUser} />
                 <div className={styles.rightSide}>
                     <FontAwesomeIcon icon={faUser} className={styles.profileLogo} />
                     <h1>Profile</h1>

@@ -5,9 +5,10 @@ import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import styles from './AsideProfile.module.css';
 import { useState, useEffect } from 'react';
 
-const AsideProfile = ({ user }) => {
+const AsideProfile = ({ user, onUpdateUser }) => {
     const [bio, setBio] = useState('');
     const [inputValue, setInputValue] = useState('');
+    const [avatarUrlInput, setAvatarUrlInput] = useState('');
     const [isEditingBio, setIsEditingBio] = useState(false);
 
     useEffect(() => {
@@ -16,6 +17,12 @@ const AsideProfile = ({ user }) => {
             setInputValue(user.bio);
         }
     }, [user?.bio]);
+
+    useEffect(() => {
+        if (user?.avatarUrl) {
+            setAvatarUrlInput(user.avatarUrl);
+        }
+    }, [user?.avatarUrl]);
 
     const editIcon = <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#ffffff", }} />;
 
@@ -32,10 +39,13 @@ const AsideProfile = ({ user }) => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ bio: inputValue }),
+            body: JSON.stringify({ bio: inputValue, avatarUrl: avatarUrlInput }),
         });
 
         if (res.ok) {
+            const updated = await res.json();
+            onUpdateUser?.(updated.user);
+
             setBio(inputValue);
             setIsEditingBio(false);
         } else {
@@ -55,7 +65,20 @@ const AsideProfile = ({ user }) => {
 
                     {isEditingBio ? (
                         <div className={styles.editingBioContainer}>
-                            <textarea className={styles.bioTextarea} value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                            <textarea
+                                className={styles.bioTextarea}
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder='Write about yourself'
+                            />
+
+                            <input
+                                className={styles.avatarInput}
+                                type="text"
+                                placeholder='URL to avatar'
+                                value={avatarUrlInput}
+                                onChange={(e) => setAvatarUrlInput(e.target.value)} />
+
                             <button onClick={handleSave} className={styles.submitBtn}>
                                 Сохранить
                             </button>
@@ -67,7 +90,7 @@ const AsideProfile = ({ user }) => {
                         </p>
                     ) : (
                         <p>
-                            Write about yourself.
+                            Change profile details
                             <button className={styles.startEditingBtn} onClick={() => setIsEditingBio(true)}>{editIcon}</button>
                         </p>
 

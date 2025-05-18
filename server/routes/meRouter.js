@@ -20,18 +20,22 @@ router.get('/', authenticateToken, async (req, res) => {
 
 router.patch('/', authenticateToken, async (req, res) => {
     const userId = req.user.id;
-    const { bio } = req.body;
+    const { bio, avatarUrl } = req.body;
+
+    const updateData = {};
+    if (bio !== undefined) updateData.bio = bio;
+    if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl;
 
     try {
         const updatedUser = await prisma.user.update({
             where: { id: userId },
-            data: { bio },
+            data: updateData,
         });
 
-        res.json({ message: 'Bio updated', user: updatedUser });
+        res.json({ message: 'Profile updated', user: updatedUser });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Error updating bio' });
+        res.status(500).json({ error: 'Error updating profile' });
     }
 });
 
