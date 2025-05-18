@@ -32,6 +32,9 @@ app.use(cors({
     try {
         await botService.ensureBotsExist();
         console.log('Bot users initialized');
+
+        const PORT = process.env.PORT || 3000
+        app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
     } catch (err) {
         console.error('Error initializing bot users', err);
     }
@@ -48,6 +51,3 @@ app.use('/api/chats', chatsRouter);
 
 // Messages
 app.use('/api/messages', messagesRouter);
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
